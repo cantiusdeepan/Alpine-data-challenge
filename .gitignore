@@ -170,8 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Ignore files in data folder
-data/
+
 
 # Ignore files in AutogluonModels folder
 AutogluonModels/
