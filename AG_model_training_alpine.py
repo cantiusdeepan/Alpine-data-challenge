@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from autogluon.timeseries import TimeSeriesDataFrame, TimeSeriesPredictor
 from typing import Dict, Optional
 import torch
+import logging
+import os
 
 torch.backends.cudnn.benchmark = True
 torch.cuda.set_per_process_memory_fraction(0.8)  # Prevent OOM
@@ -12,6 +14,20 @@ torch.cuda.set_per_process_memory_fraction(0.8)  # Prevent OOM
 from torch.amp import GradScaler
 
 scaler = GradScaler("cuda", enabled=True)
+
+
+# Ensure log directory exists
+log_dir = 'C:/Users/USER/Documents/Deepan/Workspaces/Alpine-data-challenge/logs'
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+# Configure logging
+logging.basicConfig(
+    filename=os.path.join(log_dir, 'autogluon_training_alpine_valley.log'),
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
+
 
 hyperparameters = {
     # Deep Learning Models
@@ -79,6 +95,7 @@ class WeatherForecaster:
                 "day_of_year": future_dates.dayofyear,
                 "seasonality": np.sin(2 * np.pi * future_dates.dayofyear / 365),
                 "year": future_dates.year,
+                "item_id": self.config["valley_ids"][0],
             }
         ).set_index("date")
 
@@ -192,10 +209,21 @@ class WeatherForecaster:
                 verbosity=self.config["log_level"],
             )
 
+                        # Log useful metadata
+            logging.info("\n=== AutoGluon Training Summary ===")
+            logging.info(f"Best Model: {self.predictor.model_best}")
+            logging.info("Leaderboard:")
+            logging.info(self.predictor.leaderboard(silent=True).to_string())
+            logging.info(f"Fit Summary: {self.predictor.fit_summary()}")
+
             # Generate future covariates
             future_covariates = self._generate_future_covariates(
                 last_date, prediction_length
             )
+
+            # Ensure DataFrame has 'item_id' column
+            if 'item_id' not in known_covariates.columns:
+                raise ValueError("Data must have a `item_id` column")
 
             # Make predictions
             forecast = self.predictor.predict(
