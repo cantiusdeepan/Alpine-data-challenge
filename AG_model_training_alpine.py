@@ -72,7 +72,7 @@ class WeatherForecaster:
 
     def _generate_future_covariates(
         self, last_date: pd.Timestamp, prediction_length: int
-    ) -> pd.DataFrame:
+    ) -> TimeSeriesDataFrame:
         """
         Create future covariates for forecasting.
 
@@ -81,7 +81,7 @@ class WeatherForecaster:
             prediction_length (int): The length of the prediction window.
 
         Returns:
-            pd.DataFrame: DataFrame containing future covariates.
+            TimeSeriesDataFrame: DataFrame containing future covariates.
         """
         future_dates = pd.date_range(
             start=last_date + pd.DateOffset(days=1),
@@ -90,15 +90,19 @@ class WeatherForecaster:
         )
 
         # Example covariate: day of year sine/cosine
-        return pd.DataFrame(
+        future_covariates = pd.DataFrame(
             {
-                "date": future_dates,
+                "timestamp": future_dates,
                 "day_of_year": future_dates.dayofyear,
                 "seasonality": np.sin(2 * np.pi * future_dates.dayofyear / 365),
                 "year": future_dates.year,
                 "item_id": self.config["valley_ids"][0],
             }
-        ).set_index("date")
+        ).set_index("timestamp")
+
+        return TimeSeriesDataFrame.from_data_frame(
+            future_covariates, id_column="item_id", timestamp_column="timestamp"
+        )
 
     def _update_dataset(
         self, history: TimeSeriesDataFrame, forecast: TimeSeriesDataFrame
