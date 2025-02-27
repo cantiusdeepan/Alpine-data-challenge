@@ -33,9 +33,9 @@ logging.basicConfig(
 hyperparameters = {
     # Deep Learning Models
     "DeepAR": {},
-    #"TemporalFusionTransformer": {},
-    #"PatchTST": {},
-    #"TiDE": {},
+    "TemporalFusionTransformer": {},
+    "PatchTST": {},
+    "TiDE": {},
 }
 
 
@@ -132,7 +132,7 @@ class WeatherForecaster:
             forecasts (Dict[str, pd.DataFrame]): Dictionary of forecasts for each valley.
         """
         plt.figure(figsize=(20, 10))
-        colors = {"valley1": "blue", "valley2": "orange"}
+        colors = {"maurienne": "blue", "susa": "orange"}
 
         for valley_id, data in forecasts.items():
             # Plot historical data
