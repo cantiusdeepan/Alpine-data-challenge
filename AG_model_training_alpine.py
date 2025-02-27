@@ -7,13 +7,14 @@ import torch
 import logging
 import os
 
-torch.backends.cudnn.benchmark = True
-torch.cuda.set_per_process_memory_fraction(0.8)  # Prevent OOM
+if torch.cuda.is_available():
+    torch.backends.cudnn.benchmark = True
+    torch.cuda.set_per_process_memory_fraction(0.8)  # Prevent OOM
 
-# Mixed precision training
-from torch.amp import GradScaler
+    # Mixed precision training
+    from torch.amp import GradScaler
 
-scaler = GradScaler("cuda", enabled=True)
+    scaler = GradScaler("cuda", enabled=True)
 
 
 # Ensure log directory exists
@@ -221,9 +222,6 @@ class WeatherForecaster:
                 last_date, prediction_length
             )
 
-            # Ensure DataFrame has 'item_id' column
-            if 'item_id' not in known_covariates.columns:
-                raise ValueError("Data must have a `item_id` column")
 
             # Make predictions
             forecast = self.predictor.predict(
