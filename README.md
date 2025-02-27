@@ -28,9 +28,16 @@
     conda env create -f ag-alpine_valley.yml --name ag
     ```
 
-3. Activate the environment:
+3. Activate the environment(for GPU):
     ```sh
     conda activate ag
     mamba install -c conda-forge autogluon "pytorch=*=cuda*"
+    mamba install -c conda-forge "ray-tune >=2.10.0,<2.32" "ray-default >=2.10.0,<2.32"  # install ray for faster training
+    ```
+
+3. Activate the environment(for CPU):
+    ```sh
+    conda activate ag
+    mamba install -c conda-forge autogluon
     mamba install -c conda-forge "ray-tune >=2.10.0,<2.32" "ray-default >=2.10.0,<2.32"  # install ray for faster training
     ```
