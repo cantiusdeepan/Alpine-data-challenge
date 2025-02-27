@@ -1,0 +1,12 @@
+name: ag
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+dependencies:
+  - python=3.11
+  - mamba
+  - autogluon
+  - "pytorch=*=*cuda*"
+  - "ray-tune>=2.10.0,<2.32"
+  - "ray-default>=2.10.0,<2.32"
