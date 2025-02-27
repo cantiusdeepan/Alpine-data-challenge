@@ -33,9 +33,9 @@ logging.basicConfig(
 hyperparameters = {
     # Deep Learning Models
     "DeepAR": {},
-    "TemporalFusionTransformer": {},
-    "PatchTST": {},
-    "TiDE": {},
+    #"TemporalFusionTransformer": {},
+    #"PatchTST": {},
+    #"TiDE": {},
 }
 
 
@@ -98,7 +98,7 @@ class WeatherForecaster:
                 "year": future_dates.year,
                 "item_id": self.config["valley_ids"][0],
             }
-        ).set_index("timestamp")
+        )
 
         return TimeSeriesDataFrame.from_data_frame(
             future_covariates, id_column="item_id", timestamp_column="timestamp"
