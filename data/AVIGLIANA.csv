@@ -1,4 +1,4 @@
-True,tmedia,tmax,tmin,tclasse,ptot,pclasse,vmedia,vraffica,settore_prevalente,tempo_permanenza,durata_calma,vclasse,umedia,umin,umax,uclasse,rtot,rclasse,hdd_base18,hdd_base20,cdd_base18
+date,tmedia,tmax,tmin,tclasse,ptot,pclasse,vmedia,vraffica,settore_prevalente,tempo_permanenza,durata_calma,vclasse,umedia,umin,umax,uclasse,rtot,rclasse,hdd_base18,hdd_base20,cdd_base18
 1991-01-09,,,,M000,,M0,,,,,,M00000,,,,M000,,M0,,,
 1991-01-10,1.6,8.8,-2.2,M000,0.0,MZ,0.3,3.4,W,150.0,1020.0,M00000,88.0,57.0,99.0,M000,4.8,M0,14.7,16.7,0.0
 1991-01-11,2.8,10.3,-1.8,M000,0.2,MY,0.4,4.8,W,190.0,860.0,M00000,86.0,56.0,100.0,M000,5.4,M0,13.8,15.8,0.0
